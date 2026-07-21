@@ -38,6 +38,17 @@ export default function Home() {
     }
   }
 
+  function handleExport() {
+    const data = { fileName, bpm, taps };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${fileName ?? 'beatmap'}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.code !== 'Space') return;
@@ -89,7 +100,7 @@ export default function Home() {
   const bpm = calculateBPM(taps);
   return ( 
     // TODO: Decide and Change background color later 
-    <main className="w-full h-screen bg-cyan-700 flex flex-col justify-center items-center gap-8">
+    <main className="relative w-full h-screen bg-cyan-700 flex flex-col justify-center items-center gap-8">
       <p className="text-white text-xl">Tap to the beat</p>
 
       <div className="relative w-[28rem] h-[28rem] flex items-center justify-center">
@@ -114,7 +125,15 @@ export default function Home() {
         />
         {fileName && <p className="text-white text-sm">{fileName}</p>}
       </div>
+      {taps.length > 0 && (
+        <button
+          onClick={handleExport}
+          className="absolute top-6 left-6 bg-white text-cyan-700 font-semibold px-6 py-2 rounded-full hover:bg-cyan-100 transition"
+        >
+          Export JSON
+        </button>
+      )}
     </main>
   );
 }
-
+  
