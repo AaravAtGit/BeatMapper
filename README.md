@@ -12,7 +12,7 @@ Map your beats to the music and export as Json.
  - AudioMotion Analyzer 
 
 ## How to use
-1. Choose a track
+1. Choose a track(local audio file for eg,mp3) 
 2. Press **Space** to start playback
 3. Press **Space** on every beat to tap along — BPM updates live
 4. Click **Export JSON** to download your beat map
