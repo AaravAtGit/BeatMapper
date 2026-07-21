@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import AudioMotionAnalyzer from "audiomotion-analyzer";
+import confetti from 'canvas-confetti';
 
 
 function calculateBPM(taps: number[]): number | null {
@@ -27,11 +28,13 @@ export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const visualizerRef = useRef<HTMLDivElement>(null);
   const audioMotionRef = useRef<AudioMotionAnalyzer | null>(null);
+  const [fileName, SetFileName] = useState<string | null>(null);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files?.[0]) {
       const file = e.target.files[0];
       setAudioUrl(URL.createObjectURL(file));
+      SetFileName(file.name)
     }
   }
 
@@ -47,6 +50,11 @@ export default function Home() {
         audio.play();
       } else {
         setTaps((prev) => [...prev, audio.currentTime]);
+        confetti({
+          particleCount: 50,
+          spread: 60,
+          origin: {y: 0.6}
+        });
       }
     }
 
@@ -92,7 +100,21 @@ export default function Home() {
       </div>
 
       {audioUrl && <audio ref={audioRef} src={audioUrl} className="hidden" />}
-      <input type="file" accept="audio/*" onChange={handleFileChange} />
+      <div className="flex flex-col items-center gap-2">
+        <label
+          htmlFor="audio-upload"
+          className="cursor-pointer bg-white text-cyan-700 font-semibold px-6 py-2 rounded-full hover:bg-cyan-100 transition"
+        > Choose a track </label>
+        <input
+          id="audio-upload"
+          type="file"
+          accept="audio/*"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+        {fileName && <p className="text-white text-sm">{fileName}</p>}
+      </div>
     </main>
   );
 }
+
