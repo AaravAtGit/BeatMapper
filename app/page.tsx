@@ -98,8 +98,7 @@ export default function Home() {
 
 
   const bpm = calculateBPM(taps);
-  return ( 
-    // TODO: Decide and Change background color later 
+  return (  
     <main className="relative w-full h-screen bg-cyan-700 flex flex-col justify-center items-center gap-8">
       <p className="text-white text-xl">Tap to the beat</p>
 
