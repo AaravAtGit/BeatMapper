@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useRef, useEffect } from "react";
 import AudioMotionAnalyzer from "audiomotion-analyzer";
 import confetti from 'canvas-confetti';
+import { useEffect, useRef, useState } from "react";
 
 
 function calculateBPM(taps: number[]): number | null {
@@ -100,7 +100,7 @@ export default function Home() {
   const bpm = calculateBPM(taps);
   return (  
     <main className="relative w-full h-screen bg-cyan-700 flex flex-col justify-center items-center gap-8">
-      <p className="text-white text-xl">Tap to the beat</p>
+      <p className="text-white text-xl">Tap(space) to the beat</p>
 
       <div className="relative w-[28rem] h-[28rem] flex items-center justify-center">
         <div ref={visualizerRef} className="absolute inset-0" />
