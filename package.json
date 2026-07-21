@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "audiomotion-analyzer": "^4.5.4",
     "canvas-confetti": "^1.9.4",
     "next": "16.2.10",
     "react": "19.2.4",
