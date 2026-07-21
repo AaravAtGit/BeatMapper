@@ -34,14 +34,31 @@ export default function Home() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  return (
+
+  function calculateBPM(taps: number[]): number | null {
+    if (taps.length < 2) return null;
+
+    const recentTaps = taps.slice(-8);
+    const intervals: number[] = [];
+
+    for (let i = 1; i < recentTaps.length; i++) {
+      intervals.push(recentTaps[i] - recentTaps[i - 1]);
+    }
+
+    const avgInterval = intervals.reduce((sum, val) => sum + val, 0) / intervals.length;
+
+    return Math.round(60 / avgInterval);
+    
+  }
+
+  const bpm = calculateBPM(taps);
+  return ( 
     // TODO: Decide and Change background color later 
     <main className="w-full h-screen bg-cyan-700 flex justify-center items-center ">
       <input type="file" accept="audio/*" onChange={handleFileChange} />
       {audioUrl && <audio ref={audioRef} src={audioUrl} className="hidden"></audio>}
 
-      <p className="text-white text-4xl font-bold">Tap to the Beat!</p>
-      <p className="text-white">Taps recorded: {taps.length}</p>
+      <p className="text-white text-4xl font-bold">{bpm ? `${bpm} BPM`: "Tap to the Beat!"}</p>
     </main>
   );
 }
