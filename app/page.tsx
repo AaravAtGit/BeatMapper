@@ -111,7 +111,7 @@ export default function Home() {
             </div>
 
             {audioUrl && <audio ref={audioRef} src={audioUrl} className="hidden" crossOrigin="anonymous" />}
-            
+
             <div className="flex flex-col items-center gap-2">
                 <label
                     htmlFor="audio-upload"
